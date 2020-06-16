@@ -29,11 +29,13 @@ void process_image_callback(const sensor_msgs::Image img){
     int white_pixel =255;
     for (int i = 0; i < img.height * img.step; i++) {        
     	if(img.data[i] == white_pixel){
+          //Drives toward the ball and turns depending where it is in the image
         	x = 0.5;
         	z = 0.00042 * i - 0.5;
           	break;
         }
      	else{
+          //Searches for the ball by turning if ball in not in the image
           	x = 0.0;
           	z = 0.5;
         }
