@@ -26,7 +26,8 @@ void process_image_callback(const sensor_msgs::Image img){
     // Request a stop when there's no white ball seen by the camera
 
     float x, z;
-    int white_pixel =255;
+  	int ball_location;
+    int white_pixel = 255;
     for (int i = 0; i < img.height * img.step; i+=3) {
       	int red = img.data[i];
       	int green = img.data[i+1];
@@ -34,7 +35,10 @@ void process_image_callback(const sensor_msgs::Image img){
     	if(red == white_pixel && green == white_pixel && blue == white_pixel ){
           //Drives toward the ball and turns depending where it is in the image
         	x = 0.5;
-        	z = 0.00042 * i - 0.5;
+          //Determines where is ball located in image along the x-axis
+         	ball_location = i % img.step;
+          //Function determines how much robot should turn depending on where ball is located in the image
+        	z = -0.00042 * ball_location + 0.5;
           	break;
         }
      	else{
